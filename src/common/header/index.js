@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import  {actionCreators} from './store';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWarper } from './style';
 
 // 无状态组件，好处就是提高性能
@@ -42,23 +43,17 @@ const Header = (props) => {
 const mapStateToPorps = (state) => {
   // 返回一个对象
   return {
-    focused: state.focused
+    focused: state.header.focused
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFouce() {
-      const action = {
-        type: 'search_focus'
-      };
-      dispatch(action);
+      dispatch(actionCreators.searchFocus());
     },
     handleInputBlur() {
-      const action = {
-        type: 'search_blur'
-      };
-      dispatch(action);
+      dispatch(actionCreators.searchBlur());
     }
   };
 };
