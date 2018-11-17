@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {GlobalStyle} from "./style";
-import {GlobalStyle1} from './statics/iconfont/iconfont'
-import Header from './common/header'
+import store from './store';
+import { Provider } from 'react-redux';
+import { GlobalStyle } from './style';
+import { GlobalStyle1 } from './statics/iconfont/iconfont';
+import Header from './common/header';
 
 class App extends Component {
   render() {
@@ -9,7 +11,11 @@ class App extends Component {
       <div className="App">
         <GlobalStyle/>
         <GlobalStyle1/>
-        <Header/>
+        {/*把store提供给内部组件*/}
+        <Provider store={store}>
+          <Header/>
+        </Provider>
+
       </div>
     );
   }

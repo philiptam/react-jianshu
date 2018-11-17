@@ -1,37 +1,67 @@
-import React, {Component} from 'react';
-import {HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWarper} from './style';
+import React from 'react';
+import { connect } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
+import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWarper } from './style';
 
-class Header extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      focused: true
+// 无状态组件，好处就是提高性能
+const Header = (props) => {
+  return (
+    <HeaderWrapper>
+      <Logo href='/'/>
+      <Nav>
+        <NavItem className='left active'>首页</NavItem>
+        <NavItem className='left'>下载APP</NavItem>
+        <NavItem className='right'>登录</NavItem>
+        <NavItem className='right'>
+          <i className="iconfont">&#xe636;</i>
+        </NavItem>
+        <SearchWarper>
+          <CSSTransition
+            in={props.focused}
+            timeout={200}
+            classNames='slide'
+          >
+            <NavSearch
+              className={props.focused ? 'focused' : ''}
+              onFocus={props.handleInputFouce}
+              onBlur={props.handleInputBlur}
+            ></NavSearch>
+          </CSSTransition>
+          <i className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe637;</i>
+        </SearchWarper>
+      </Nav>
+      <Addition>
+        <Button className='writting'><i className="iconfont">&#xe624;</i>写文章</Button>
+        <Button className='reg'>注册</Button>
+      </Addition>
+    </HeaderWrapper>
+  );
+};
+
+// 把store的数据映射到组件的props里面去
+const mapStateToPorps = (state) => {
+  // 返回一个对象
+  return {
+    focused: state.focused
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleInputFouce() {
+      const action = {
+        type: 'search_focus'
+      };
+      dispatch(action);
+    },
+    handleInputBlur() {
+      const action = {
+        type: 'search_blur'
+      };
+      dispatch(action);
     }
-  }
+  };
+};
 
-  render() {
-    return (
-      <HeaderWrapper>
-        <Logo href='/'/>
-        <Nav>
-          <NavItem className='left active'>首页</NavItem>
-          <NavItem className='left'>下载APP</NavItem>
-          <NavItem className='right'>登录</NavItem>
-          <NavItem className='right'>
-            <i className="iconfont">&#xe636;</i>
-          </NavItem>
-          <SearchWarper>
-            <NavSearch className={this.state.focused ? 'focused' : ''}></NavSearch>
-            <i className={this.state.focused ? 'focused iconfont' : 'iconfont'}>&#xe637;</i>
-          </SearchWarper>
-        </Nav>
-        <Addition>
-          <Button className='writting'><i className="iconfont">&#xe624;</i>写文章</Button>
-          <Button className='reg'>注册</Button>
-        </Addition>
-      </HeaderWrapper>
-    )
-  }
-}
-
-export default Header;
+// 两个映射参数
+export default connect(mapStateToPorps, mapDispatchToProps)(Header);
