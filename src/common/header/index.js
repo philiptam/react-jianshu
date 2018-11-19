@@ -43,7 +43,7 @@ const Header = (props) => {
 const mapStateToPorps = (state) => {
   // 返回一个对象
   return {
-    focused: state.header.focused
+    focused: state.header.get('focused')
   };
 };
 
