@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import  {actionCreators} from './store';
-import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWarper } from './style';
+import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWarper,SearchInfo ,SearchTitle,SearchInfoSwitch} from './style';
 
 // 无状态组件，好处就是提高性能
 const Header = (props) => {
@@ -29,6 +29,11 @@ const Header = (props) => {
             ></NavSearch>
           </CSSTransition>
           <i className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe637;</i>
+          <SearchInfo>
+            <SearchTitle>热门搜索
+              <SearchInfoSwitch>换一批</SearchInfoSwitch>
+            </SearchTitle>
+          </SearchInfo>
         </SearchWarper>
       </Nav>
       <Addition>
