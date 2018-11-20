@@ -126,12 +126,11 @@ export const SearchInfo = styled.div`
   left: 0;
   top: 56px;
   width: 240px;
-  height: 100px;
   padding: 0 20px;
   box-shadow: 0 0 8px rgba(0,0,0,.2);
 `;
 
-export const SearchTitle= styled.div`
+export const SearchTitle = styled.div`
   margin-top: 20px;
   margin-bottom: 15px;
   line-height: 20px;
@@ -139,7 +138,24 @@ export const SearchTitle= styled.div`
   color: #969696;
 `;
 
-export const SearchInfoSwitch=styled.div`
+export const SearchInfoSwitch = styled.div`
   float: right;
   font-size: 13px;
+`;
+
+export const SearchInfoItem = styled.a`
+  display: block;
+  float:left;
+  font-size:12px;
+  line-height: 20px;
+  padding: 0 5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  color: #787878;
+  border-radius: 3px;
+`;
+
+export const SearchInfoList=styled.div`
+  overflow: hidden;
 `;
