@@ -2,7 +2,8 @@ import * as actionTypes from './contants';
 import {fromJS} from 'immutable';
 
 const defaultState = fromJS({
-  focused: false
+  focused: false,
+  list: []
 });
 
 export default (state = defaultState, action) => {
@@ -12,6 +13,9 @@ export default (state = defaultState, action) => {
   }
   if (action.type === actionTypes.SEARCH_BLUR) {
     return state.set('focused', false);
+  }
+  if (action.type === actionTypes.CHANGE_LIST) {
+    return state.set('list', action.data);
   }
   return state;
 }
