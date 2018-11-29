@@ -21,7 +21,8 @@ import {
 class Header extends Component {
 
   getListArea() {
-    if (this.props.focused) {
+    const {focused, list} = this.props;
+    if (focused) {
       return (
         <SearchInfo>
           <SearchTitle>热门搜索
@@ -30,8 +31,8 @@ class Header extends Component {
           <div>
             <SearchInfoList>
               {
-                this.props.list.map((item)=>{
-                  return  <SearchInfoItem key={item}>{item}</SearchInfoItem>
+                list.map((item) => {
+                  return <SearchInfoItem key={item}>{item}</SearchInfoItem>
                 })
               }
             </SearchInfoList>
@@ -44,6 +45,7 @@ class Header extends Component {
   }
 
   render() {
+    const {focused,handleInputFouce,handleInputBlur}=this.props;
     return (
       <HeaderWrapper>
         <Logo href='/'/>
@@ -56,17 +58,17 @@ class Header extends Component {
           </NavItem>
           <SearchWarper>
             <CSSTransition
-              in={this.props.focused}
+              in={focused}
               timeout={200}
               classNames='slide'
             >
               <NavSearch
-                className={this.props.focused ? 'focused' : ''}
-                onFocus={this.props.handleInputFouce}
-                onBlur={this.props.handleInputBlur}
+                className={focused ? 'focused' : ''}
+                onFocus={handleInputFouce}
+                onBlur={handleInputBlur}
               ></NavSearch>
             </CSSTransition>
-            <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe637;</i>
+            <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe637;</i>
             {this.getListArea()}
           </SearchWarper>
         </Nav>
@@ -85,7 +87,7 @@ const mapStateToPorps = (state) => {
   // 返回一个对象
   return {
     focused: state.getIn(['header', 'focused']),
-    list:state.getIn(['header','list'])
+    list: state.getIn(['header', 'list'])
     // focused: state.get('header').get('focused') //功能跟上面一样
   };
 };
