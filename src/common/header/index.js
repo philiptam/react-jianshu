@@ -21,20 +21,31 @@ import {
 class Header extends Component {
 
   getListArea() {
-    const {focused, list} = this.props;
-    if (focused) {
+    const {focused, mouseIn, list, page, totolPage, handleMouseInter, handleMouseLeave, handleChangePage} = this.props;
+    const jsList = list.toJS();
+    const pageList = [];
+
+    if (jsList.length) {
+      for (let i = (page * 10); i < (page + 1) * 10; i++) {
+        pageList.push(
+          <SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>
+        )
+      }
+    }
+    if (focused || mouseIn) {
       return (
-        <SearchInfo>
+        <SearchInfo
+          onMouseEnter={handleMouseInter}
+          onMouseLeave={handleMouseLeave}
+        >
           <SearchTitle>热门搜索
-            <SearchInfoSwitch>换一批</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={() => {
+              handleChangePage(page, totolPage)
+            }}>换一批</SearchInfoSwitch>
           </SearchTitle>
           <div>
             <SearchInfoList>
-              {
-                list.map((item) => {
-                  return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                })
-              }
+              {pageList}
             </SearchInfoList>
           </div>
         </SearchInfo>
@@ -45,7 +56,7 @@ class Header extends Component {
   }
 
   render() {
-    const {focused,handleInputFouce,handleInputBlur}=this.props;
+    const {focused, handleInputFouce, handleInputBlur} = this.props;
     return (
       <HeaderWrapper>
         <Logo href='/'/>
@@ -87,7 +98,10 @@ const mapStateToPorps = (state) => {
   // 返回一个对象
   return {
     focused: state.getIn(['header', 'focused']),
-    list: state.getIn(['header', 'list'])
+    list: state.getIn(['header', 'list']),
+    page: state.getIn(['header', 'page']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
+    totolPage: state.getIn(['header', 'totolPage'])
     // focused: state.get('header').get('focused') //功能跟上面一样
   };
 };
@@ -100,6 +114,20 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleInputBlur() {
       dispatch(actionCreators.searchBlur());
+    },
+    handleMouseInter() {
+      dispatch(actionCreators.mouseEnter())
+    },
+    handleMouseLeave() {
+      dispatch(actionCreators.mouseLeave())
+    },
+    handleChangePage(page, totolPage) {
+      if ((page + 1) < totolPage) {
+        dispatch(actionCreators.changePage(page + 1))
+      } else {
+        dispatch(actionCreators.changePage(0))
+      }
+      // dispatch(actionCreators.changePage())
     }
   };
 };
