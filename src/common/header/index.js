@@ -41,7 +41,7 @@ class Header extends Component {
           <SearchTitle>热门搜索
             <SearchInfoSwitch onClick={() => {
               handleChangePage(page, totolPage)
-            }}>换一批</SearchInfoSwitch>
+            }}><i className="iconfont">&#xe851;</i>换一批</SearchInfoSwitch>
           </SearchTitle>
           <div>
             <SearchInfoList>
@@ -79,7 +79,7 @@ class Header extends Component {
                 onBlur={handleInputBlur}
               ></NavSearch>
             </CSSTransition>
-            <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe637;</i>
+            <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe637;</i>
             {this.getListArea()}
           </SearchWarper>
         </Nav>
